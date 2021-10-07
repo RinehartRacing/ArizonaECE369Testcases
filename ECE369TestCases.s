@@ -3,7 +3,10 @@
 #consider adding more testcases
 
 ######################################################################################################################################
+.text
 
+.globl main
+main:
 addi $t0, $0, -3			#0 [addi] t0 = -3
 nop
 nop
@@ -22,7 +25,7 @@ nop
 nop
 nop
 nop
-addiu $t2, $t2, 0xFFFF/65535/-1		#12 [addiu] t2 = -8 (sign extend 0xFFFF -> 0xFFFF_FFFF = -1; invert bits and add 1)
+addiu $t2, $t2, 0x0FFF	#12 [addiu] t2 = -8 (sign extend 0xFFFF -> 0xFFFF_FFFF = -1; invert bits and add 1)
 nop
 nop
 nop
@@ -140,25 +143,25 @@ nop
 nop
 nop
 nop
-lui $t0, $0, 0xAAAA			#80 t0 = AAAA_0000
+lui $t0, 0xAAAA			#80 t0 = AAAA_0000
 nop
 nop
 nop
 nop
 nop
-addi $t0, $0, 0xAAAA		   	#84 			t0 = AAAA_AAAA = 1010_1010_1010_1010_1010_1010_1010_1010
+addi $t0, $0, 0x0AAA		   	#84 			t0 = AAAA_AAAA = 1010_1010_1010_1010_1010_1010_1010_1010
 nop
 nop
 nop
 nop
 nop
-lui $t1, $0, 0x9999			#88 			t1 = 9999_0000
+lui $t1, 0x0999			#88 			t1 = 9999_0000
 nop
 nop
 nop
 nop
 nop
-addi $t1, $0, 0x9999			#92 			t1 = 9999_9999 = 1001_1001_1001_1001_1001_1001_1001_1001
+addi $t1, $0, 0x0999			#92 			t1 = 9999_9999 = 1001_1001_1001_1001_1001_1001_1001_1001
 nop
 nop
 nop
@@ -170,7 +173,7 @@ nop
 nop
 nop
 nop
-andi $t2, $t0, 0x7777			#100 [andi]		t2 = 0000_2222 = 0000_0010_0010_0010_0010_0010_0010_0010 (7777 = 0000_0000_0000_0000_0111_0111_0111_0111) ZERO-EXTEND
+andi $t2, $t0, 0x0777			#100 [andi]		t2 = 0000_2222 = 0000_0010_0010_0010_0010_0010_0010_0010 (7777 = 0000_0000_0000_0000_0111_0111_0111_0111) ZERO-EXTEND
 nop
 nop
 nop
@@ -194,13 +197,13 @@ nop
 nop
 nop
 nop
-ori $t2, $t0, 0x7777			#116 [ori]		t2 = AAAA_FFFF = 1010_1010_1010_1010_1111_1111_1111_1111
+ori $t2, $t0, 0x0777			#116 [ori]		t2 = AAAA_FFFF = 1010_1010_1010_1010_1111_1111_1111_1111
 nop
 nop
 nop
 nop
 nop
-xori $t2, $t0, 0x7777			#120 [xori]		t2 = AAAA_DDDD = 1010_1010_1010_1010_1101_1101_1101_1101 
+xori $t2, $t0, 0x0777			#120 [xori]		t2 = AAAA_DDDD = 1010_1010_1010_1010_1101_1101_1101_1101 
 nop
 nop
 nop
@@ -224,7 +227,7 @@ nop
 nop
 nop
 nop
-addi $t2, $t2, -0x0010/-16		#136			t2 = 0FFF_F767 = 0000_1111_1111_1111_1111_0111_0110_0111
+addi $t2, $t2, -0x0010		#136			t2 = 0FFF_F767 = 0000_1111_1111_1111_1111_0111_0110_0111
 nop
 nop
 nop
@@ -236,7 +239,7 @@ nop
 nop
 nop
 nop
-addi $t1, $t1, -0x0010/-16		#144			t1 = 9999_9989 = 1001_1001_1001_1001_1001_1001_1000_1001
+addi $t1, $t1, -0x0010		#144			t1 = 9999_9989 = 1001_1001_1001_1001_1001_1001_1000_1001
 nop
 nop
 nop
@@ -254,7 +257,7 @@ nop
 nop
 nop
 nop
-slti $t3, $t1, 0xFFFF			#156 [slti] t3 = 0	t1 < FFFF_FFFF = TRUE SIGNED SIGN-EXTEND (need to test that it sets to 1 as well)
+slti $t3, $t1, 0x0FFF			#156 [slti] t3 = 0	t1 < FFFF_FFFF = TRUE SIGNED SIGN-EXTEND (need to test that it sets to 1 as well)
 nop
 nop
 nop
@@ -302,7 +305,7 @@ nop
 nop
 nop
 nop
-sltiu $t3, $t1, 0xFFFF			#188 [sltiu] t3 = 1	t1 < FFFF_FFFF = TRUE UNSIGNED (need to test that it sets to 0 as well)
+sltiu $t3, $t1, 0x0FFF			#188 [sltiu] t3 = 1	t1 < FFFF_FFFF = TRUE UNSIGNED (need to test that it sets to 0 as well)
 nop
 nop
 nop
@@ -338,6 +341,7 @@ nop
 nop
 nop
 nop
+bgez_jump:
 addi $t3, $0, 4			 	#212 t3 = 4
 nop
 nop
@@ -350,7 +354,7 @@ nop
 nop
 nop
 nop
-bgez $t3, -4 				#220 (go back to 212 if t3 >= 0)
+bgez $t3, bgez_jump 				#220 (go back to 212 if t3 >= 0)
 nop
 nop
 nop
@@ -364,13 +368,14 @@ nop
 nop
 nop
 nop
+beq_jump:
 addi $t3, $t3, 1			#228 t3 = 0
 nop
 nop
 nop
 nop
 nop
-beq $t3, $t4, -2			#232 (go back to 228 if t3 = t4)
+beq $t3, $t4, beq_jump			#232 (go back to 228 if t3 = t4)
 nop
 nop
 nop
@@ -384,13 +389,14 @@ nop
 nop
 nop
 nop
+bne_jump:
 addi $t4, $t4, 1			#240 t4 = 0
 nop
 nop
 nop
 nop
 nop
-bne $t3, $t4, -2			#244 (go back to 240 if t3 != t4)
+bne $t3, $t4, bne_jump			#244 (go back to 240 if t3 != t4)
 nop
 nop
 nop
@@ -404,13 +410,14 @@ nop
 nop
 nop
 nop
+bgtz_jump:
 addi $t4, $t4, -1			#252 t4 = 1
 nop
 nop
 nop
 nop
 nop
-bgtz $t4, -2				#256 (go back to 252 if t4 > 0)
+bgtz $t4, bgtz_jump				#256 (go back to 252 if t4 > 0)
 nop
 nop
 nop
@@ -424,13 +431,14 @@ nop
 nop
 nop
 nop
+blez_jump:
 addi $t4, $t4, 1			#264 t4 = 0
 nop
 nop
 nop
 nop
 nop
-blez $t4, -2				#268 (go back to 264 if t4 <= 0)
+blez $t4, blez_jump			#268 (go back to 264 if t4 <= 0)
 nop
 nop
 nop
@@ -444,13 +452,14 @@ nop
 nop
 nop
 nop
+bltz_jump:
 addi $t4, $t4, 1			#276 t4 = -1
 nop
 nop
 nop
 nop
 nop
-bltz $t4, -2				#280 (go back to 276 if t4 < 0)
+bltz $t4, bltz_jump				#280 (go back to 276 if t4 < 0)
 nop
 nop
 nop
@@ -458,7 +467,7 @@ nop
 nop
 					#t4 = 0
 
-j 292					#284 (jump to 292)
+j j_jump					#284 (jump to 292)
 nop
 nop
 nop
@@ -470,6 +479,7 @@ nop
 nop
 nop
 nop
+j_jump:
 addi $t4, $t4, 1			#292 t4 = 1 (NOT 2)
 nop
 nop
@@ -506,12 +516,13 @@ nop
 nop
 nop
 nop
-bne $t5, $0, 2 				#312 (go to 324 if t5 != 0)
+bne $t5, $0, bne_jump2 				#312 (go to 324 if t5 != 0)
 nop
 nop
 nop
 nop
 nop
+jal_jump:
 addi $t5, $t5, -4			#316 t5 = 0
 nop
 nop
@@ -524,7 +535,8 @@ nop
 nop
 nop
 nop
-jal 316					#324 (go to 316) ra = 328
+bne_jump2:
+jal jal_jump					#324 (go to 316) ra = 328
 nop
 nop
 nop
