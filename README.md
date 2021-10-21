@@ -12,3 +12,6 @@ If you guys haven't used GitHub before, this is the general way how to use it:
 8. Enter git push
 
 Thank you everyone for your contributions!
+
+Regex for filtering out first part in Notepad++:
+memory\[\d\]\s<=\s32'h

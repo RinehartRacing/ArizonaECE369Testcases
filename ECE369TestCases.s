@@ -109,22 +109,22 @@ nop
 nop
 nop
 nop
-lui $t0, $0, 0xAAAA			#80 t0 = AAAA_0000
+lui $t0, 0xAAAA			#80 t0 = AAAA_0000
 nop
 nop
 nop
 nop
-addi $t0, $0, 0xAAAA		   	#84 			t0 = AAAA_AAAA = 1010_1010_1010_1010_1010_1010_1010_1010
+addi $t0, $t0, 0xAAAA		   	#84 			t0 = AAAA_AAAA = 1010_1010_1010_1010_1010_1010_1010_1010
 nop
 nop
 nop
 nop
-lui $t1, $0, 0x9999			#88 			t1 = 9999_0000
+lui $t1, 0x9999			#88 			t1 = 9999_0000
 nop
 nop
 nop
 nop
-addi $t1, $0, 0x9999			#92 			t1 = 9999_9999 = 1001_1001_1001_1001_1001_1001_1001_1001
+addi $t1, $t1, 0x9999			#92 			t1 = 9999_9999 = 1001_1001_1001_1001_1001_1001_1001_1001
 nop
 nop
 nop
