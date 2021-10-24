@@ -286,8 +286,7 @@ nop
 nop
 nop
 nop
-bgez $t3, bgezt3: 			#220 (go back to 216 if t3 >= 0)
-					#t3 = -1
+bgez $t3, bgezt3 			#220 (go back to 216 if t3 >= 0				#t3 = -1
 nop
 nop
 nop
@@ -370,7 +369,7 @@ nop
 nop
 nop
 nop
-bltz $t4, -2				#280 (go back to 276 if t4 < 0)
+bltz $t4, -6				#280 (go back to 276 if t4 < 0)
 					#t4 = 0
 nop
 nop
